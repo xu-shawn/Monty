@@ -179,4 +179,12 @@ impl SearchHelpers {
 
         (elapsed >= total_time, score)
     }
+
+    fn softmin_helper(value: f32, max: f32) -> f32 {
+        max / (1.0 + (-3.0 * value / max).exp())
+    }
+
+    pub fn softmin(value: f32, max: f32) -> f32 {
+        Self::softmin_helper(value - max / 2.0, max).min(value)
+    }
 }
