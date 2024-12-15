@@ -422,7 +422,7 @@ impl<'a> Searcher<'a> {
 
             let u = expl * child.policy() / (1 + child.visits()) as f32;
 
-            q + u + 0.1 * q * q + 0.1 * u * u
+            SearchHelpers::inverse_sigmoid(q / 2.0 + 0.5) + SearchHelpers::inverse_sigmoid(u / 2.0 + 0.5)
         })
     }
 

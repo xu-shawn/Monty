@@ -179,4 +179,8 @@ impl SearchHelpers {
 
         (elapsed >= total_time, score)
     }
+
+    pub fn inverse_sigmoid(value: f32) -> f32 {
+        value.ln() - (1.0 - value).ln()
+    }
 }
