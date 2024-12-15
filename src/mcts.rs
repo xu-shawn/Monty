@@ -422,7 +422,7 @@ impl<'a> Searcher<'a> {
 
             let u = expl * child.policy() / (1 + child.visits()) as f32;
 
-            (q + u) * (1.0 + u)
+            (q + u) * (1.0 + q)
         })
     }
 
