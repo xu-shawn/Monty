@@ -191,6 +191,7 @@ impl Tree {
         }
 
         let mut sum_of_squares = 0.0;
+        let mut sum_of_cubes = 0.0;
 
         for (action, &(mov, policy)) in actions.iter().enumerate() {
             let ptr = new_ptr + action;
@@ -198,10 +199,13 @@ impl Tree {
 
             self[ptr].set_new(mov, policy);
             sum_of_squares += policy * policy;
+            sum_of_cubes += policy * policy * policy;
         }
 
         let gini_impurity = (1.0 - sum_of_squares).clamp(0.0, 1.0);
+        let ginier_impurity = (1.0 - sum_of_cubes).clamp(0.0, 1.0);
         node.set_gini_impurity(gini_impurity);
+        node.set_ginier_impurity(ginier_impurity);
 
         *actions_ptr = new_ptr;
         node.set_num_actions(actions.len());
@@ -243,15 +247,19 @@ impl Tree {
         }
 
         let mut sum_of_squares = 0.0;
+        let mut sum_of_cubes = 0.0;
 
         for (action, &policy) in policies.iter().enumerate() {
             let policy = policy / total;
             self[*actions + action].set_policy(policy);
             sum_of_squares += policy * policy;
+            sum_of_cubes += policy * policy * policy;
         }
 
         let gini_impurity = (1.0 - sum_of_squares).clamp(0.0, 1.0);
+        let ginier_impurity = (1.0 - sum_of_cubes).clamp(0.0, 1.0);
         self[node_ptr].set_gini_impurity(gini_impurity);
+        self[node_ptr].set_ginier_impurity(ginier_impurity);
     }
 
     pub fn propogate_proven_mates(&self, ptr: NodePtr, child_state: GameState) {
