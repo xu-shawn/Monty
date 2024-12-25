@@ -190,17 +190,17 @@ impl Tree {
             total += *policy;
         }
 
-        let mut sum_of_squares = 0.0;
+        let mut sum_of_exponents = 0.0;
 
         for (action, &(mov, policy)) in actions.iter().enumerate() {
             let ptr = new_ptr + action;
             let policy = policy / total;
 
             self[ptr].set_new(mov, policy);
-            sum_of_squares += policy * policy;
+            sum_of_exponents += policy.powf(params.gini_exponent());
         }
 
-        let gini_impurity = (1.0 - sum_of_squares).clamp(0.0, 1.0);
+        let gini_impurity = (1.0 - sum_of_exponents).clamp(0.0, 1.0);
         node.set_gini_impurity(gini_impurity);
 
         *actions_ptr = new_ptr;
@@ -242,15 +242,15 @@ impl Tree {
             total += *policy;
         }
 
-        let mut sum_of_squares = 0.0;
+        let mut sum_of_exponents = 0.0;
 
         for (action, &policy) in policies.iter().enumerate() {
             let policy = policy / total;
             self[*actions + action].set_policy(policy);
-            sum_of_squares += policy * policy;
+            sum_of_exponents += policy.powf(params.gini_exponent());
         }
 
-        let gini_impurity = (1.0 - sum_of_squares).clamp(0.0, 1.0);
+        let gini_impurity = (1.0 - sum_of_exponents).clamp(0.0, 1.0);
         self[node_ptr].set_gini_impurity(gini_impurity);
     }
 
