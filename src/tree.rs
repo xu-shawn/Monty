@@ -202,7 +202,7 @@ impl Tree {
         for (action, &(mov, mut policy)) in actions.iter().enumerate() {
             let ptr = new_ptr + action;
 
-            if policy > mean + 2.0 * stdev {
+            if policy > mean + 3.0 * stdev {
                 policy *= 1.2;
             }
 
