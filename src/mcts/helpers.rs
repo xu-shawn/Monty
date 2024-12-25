@@ -54,6 +54,8 @@ impl SearchHelpers {
                 .min(params.gini_min());
             scale *= (params.ginier_base() - params.ginier_ln_multiplier() * (ginier + 0.001).ln())
                 .min(params.ginier_min());
+            // println!("{}", (params.ginier_base() - params.ginier_ln_multiplier() * (ginier + 0.001).ln())
+            //               .min(params.ginier_min()));
             scale
         }
 
