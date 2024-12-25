@@ -420,7 +420,7 @@ impl<'a> Searcher<'a> {
                 q = q2 as f32;
             }
 
-            let u = expl * child.policy() / (1 + child.visits()) as f32;
+            let u = expl * child.policy() / (1 + child.visits() * (child.visits() + 1).ilog10() as i32) as f32;
 
             q + u
         })
