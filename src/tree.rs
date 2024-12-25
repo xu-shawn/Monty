@@ -190,10 +190,25 @@ impl Tree {
             total += *policy;
         }
 
+        let mean = total / (actions.len() as f32);
+
+        let mut stdev = 0.0;
+
+        for (_, policy) in actions.iter_mut() {
+            stdev += (*policy - mean) * (*policy - mean);
+        }
+
+        let stdev = (stdev / (actions.len() as f32)).sqrt();
+
         let mut sum_of_squares = 0.0;
 
-        for (action, &(mov, policy)) in actions.iter().enumerate() {
+        for (action, &(mov, mut policy)) in actions.iter().enumerate() {
             let ptr = new_ptr + action;
+
+            if policy > mean + 2.0 * stdev {
+                policy *= 1.2;
+            }
+
             let policy = policy / total;
 
             self[ptr].set_new(mov, policy);
