@@ -72,7 +72,7 @@ impl SearchHelpers {
     /// #### Note
     /// Must return a value in [0, 1].
     pub fn get_fpu(node: &Node) -> f32 {
-        1.0 - (node.q() + (node.q() - node.utility()) / 20.0).clamp(0.0, 1.0)
+        1.0 - (node.q() - (node.q() - node.utility()) / 20.0).clamp(0.0, 1.0)
     }
 
     /// Get a predicted win probability for an action
