@@ -16,7 +16,7 @@ impl SearchHelpers {
         let mut cpuct = if is_root {
             params.root_cpuct()
         } else {
-            (params.cpuct() * (depth as f32).exp() + params.root_cpuct()) / (depth as f32).exp()
+            (params.cpuct() * (depth as f32 + 1.0).exp() + params.root_cpuct()) / (depth as f32 + 1.0).exp()
         };
 
         // scale CPUCT as visits increase
