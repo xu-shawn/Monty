@@ -50,7 +50,7 @@ impl SearchHelpers {
 
             let gini = node.gini_impurity();
             scale *= ((params.gini_base() - params.gini_ln_multiplier() * (gini + 0.001).ln())
-                      .min(params.gini_min()) + node.visits() as f32 / 32768.0) / (node.visits() as f32 / 32768.0 + 1.0);
+                      .min(params.gini_min()) + node.visits() as f32 / 65536.0) / (node.visits() as f32 / 65536.0 + 1.0);
             scale
         }
 
