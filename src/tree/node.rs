@@ -204,7 +204,13 @@ impl Node {
 
     pub fn update(&self, result: f32) -> f32 {
         let r = f64::from(result);
-        let v = f64::from(self.visits.fetch_add(1, Ordering::Relaxed));
+        let mut v = f64::from(self.visits.fetch_add(1, Ordering::Relaxed));
+
+        let difference = r - self.q64();
+
+        if difference > 0.4 {
+            v /= 2.0;
+        }
 
         let q = (self.q64() * v + r) / (v + 1.0);
         let sq_q = (self.sq_q() * v + r.powi(2)) / (v + 1.0);
