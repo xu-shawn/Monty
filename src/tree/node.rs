@@ -209,7 +209,7 @@ impl Node {
         let difference = r - self.q64();
 
         if difference > 0.4 {
-            v /= 2.0;
+            v /= 1.5;
         }
 
         let q = (self.q64() * v + r) / (v + 1.0);
