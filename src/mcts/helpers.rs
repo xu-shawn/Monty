@@ -177,8 +177,29 @@ impl SearchHelpers {
                 * searcher.params.tm_bmv4())
         .clamp(searcher.params.tm_bmv5(), searcher.params.tm_bmv6());
 
+        let root_gini = {
+            let root_node = searcher.tree.root_node();
+            let first_child_ptr = { *searcher.tree[root_node].actions() };
+            let mut tot_child_visits = 0;
+
+            for action in 0..searcher.tree[root_node].num_actions() {
+                tot_child_visits += searcher.tree[first_child_ptr + action].visits();
+            }
+
+            let mut sum_of_squares = 0.0;
+
+            for action in 0..searcher.tree[root_node].num_actions() {
+                let percentage_visits = searcher.tree[first_child_ptr + action].visits() as f32 / tot_child_visits as f32;
+                sum_of_squares += percentage_visits * percentage_visits;
+            }
+
+            (1.0 - sum_of_squares).clamp(0.0, 1.0)
+        };
+
+        let root_gini_adjust = 1.12 - root_gini / 4.0;
+
         let total_time =
-            (time as f32 * falling_eval * best_move_instability * best_move_visits) as u128;
+            (time as f32 * falling_eval * best_move_instability * best_move_visits * root_gini_adjust) as u128;
 
         (elapsed >= total_time, score)
     }
