@@ -63,7 +63,7 @@ impl SearchHelpers {
         let scalar = q - q.min(params.winning_pst_threshold());
         let t = scalar / (1.0 - params.winning_pst_threshold());
         let base_pst = 1.0 - params.base_pst_adjustment()
-            + (-0.9 * (depth as f32 - 1.5)).exp();
+            + (-0.6 * (depth as f32 - 1.8)).exp();
         base_pst + (params.winning_pst_max() - base_pst) * t
     }
 
