@@ -118,6 +118,6 @@ fn pick_action(searcher: &Searcher, ptr: NodePtr, node: &Node) -> usize {
 
         let u = expl * child.policy() / (1 + child.visits()) as f32;
 
-        q + u
+        q + u + (q - u).abs().ln() / 32.0
     })
 }
