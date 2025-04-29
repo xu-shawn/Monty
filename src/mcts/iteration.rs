@@ -43,7 +43,7 @@ pub fn perform_one(
         tree.fetch_children(ptr)?;
 
         // select action to take via PUCT
-        let action = pick_action(searcher, ptr, node);
+        let action = pick_action(searcher, ptr, node, *depth);
 
         let first_child_ptr = { *node.actions() };
         let child_ptr = first_child_ptr + action;
@@ -96,10 +96,10 @@ fn get_utility(searcher: &Searcher, ptr: NodePtr, pos: &ChessState) -> f32 {
     }
 }
 
-fn pick_action(searcher: &Searcher, ptr: NodePtr, node: &Node) -> usize {
+fn pick_action(searcher: &Searcher, ptr: NodePtr, node: &Node, depth: usize) -> usize {
     let is_root = ptr == searcher.tree.root_node();
 
-    let cpuct = SearchHelpers::get_cpuct(searcher.params, node, is_root);
+    let cpuct = SearchHelpers::get_cpuct(searcher.params, node, is_root, depth);
     let fpu = SearchHelpers::get_fpu(node);
     let expl_scale = SearchHelpers::get_explore_scaling(searcher.params, node);
 
