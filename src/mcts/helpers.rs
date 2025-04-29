@@ -196,7 +196,7 @@ impl SearchHelpers {
             (1.0 - sum_of_squares).clamp(0.0, 1.0)
         };
 
-        let root_gini_adjust = 1.12 - root_gini / 4.0;
+        let root_gini_adjust = 1.16 - root_gini / 3.0;
 
         let total_time =
             (time as f32 * falling_eval * best_move_instability * best_move_visits * root_gini_adjust) as u128;
