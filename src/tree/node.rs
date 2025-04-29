@@ -58,6 +58,7 @@ pub struct Node {
     visits: AtomicI32,
     q: AtomicU32,
     sq_q: AtomicU32,
+    utility: AtomicU32,
     gini_impurity: AtomicU32,
 }
 
@@ -73,6 +74,7 @@ impl Node {
             visits: AtomicI32::new(0),
             q: AtomicU32::new(0),
             sq_q: AtomicU32::new(0),
+            utility: AtomicU32::new(0),
             gini_impurity: AtomicU32::new(0),
         }
     }
@@ -167,6 +169,14 @@ impl Node {
     pub fn set_gini_impurity(&self, gini_impurity: f32) {
         self.gini_impurity
             .store(f32::to_bits(gini_impurity), Ordering::Relaxed);
+    }
+
+    pub fn set_utility(&self, utility: f32) {
+        self.utility.store(f32::to_bits(utility), Ordering::Relaxed);
+    }
+
+    pub fn utility(&self) -> f32 {
+        f32::from_bits(self.utility.load(Ordering::Relaxed))
     }
 
     pub fn clear_actions(&self) {

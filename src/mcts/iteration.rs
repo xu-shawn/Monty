@@ -27,9 +27,13 @@ pub fn perform_one(
             if let Some(entry) = tree.probe_hash(hash) {
                 entry.q()
             } else {
-                get_utility(searcher, ptr, pos)
+                let utility = get_utility(searcher, ptr, pos);
+                node.set_utility(1.0 - utility);
+                utility
             }
         } else {
+            let utility = get_utility(searcher, ptr, pos);
+            node.set_utility(1.0 - utility);
             get_utility(searcher, ptr, pos)
         }
     } else {
