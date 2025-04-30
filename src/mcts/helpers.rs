@@ -72,7 +72,7 @@ impl SearchHelpers {
     /// #### Note
     /// Must return a value in [0, 1].
     pub fn get_fpu(node: &Node) -> f32 {
-        let node_visits_factor = node.visits() as f32 / 4096.0;
+        let node_visits_factor = (node.visits() - 1000).max(0) as f32 / 2048.0;
         (1.0 - node.q() + node_visits_factor) / (1.0 + node_visits_factor)
     }
 
