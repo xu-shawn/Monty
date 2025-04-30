@@ -72,7 +72,8 @@ impl SearchHelpers {
     /// #### Note
     /// Must return a value in [0, 1].
     pub fn get_fpu(node: &Node) -> f32 {
-        1.0 - node.q()
+        let node_visits_factor = node.visits() as f32 / 2048.0;
+        (1.0 - node.q() + node_visits_factor) / (1.0 + node_visits_factor)
     }
 
     /// Get a predicted win probability for an action
