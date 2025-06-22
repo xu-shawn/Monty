@@ -72,8 +72,11 @@ impl SearchHelpers {
     /// #### Note
     /// Must return a value in [0, 1].
     pub fn get_fpu(node: &Node, depth: usize) -> f32 {
-        let d = (depth as f32).powi(2);
-        1.0 - node.q() * (d - 1.0) / d
+        if depth == 1 {
+            1.0
+        } else {
+        1.0 - node.q()
+        }
     }
 
     /// Get a predicted win probability for an action
