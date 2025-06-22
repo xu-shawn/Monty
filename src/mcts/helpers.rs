@@ -16,7 +16,7 @@ impl SearchHelpers {
         let mut cpuct = if depth == 1 {
             params.root_cpuct()
         } else if depth == 2 {
-            0.321
+            0.280
         } else {
             params.cpuct()
         };
