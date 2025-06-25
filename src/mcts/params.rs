@@ -180,5 +180,5 @@ make_mcts_params! {
     tm_bmv4: f32 = 2.561, 0.1, 8.0, 0.4, 0.002;
     tm_bmv5: f32 = 0.634, 0.1, 1.0, 0.055, 0.002;
     tm_bmv6: f32 = 1.894, 0.1, 3.0, 0.15, 0.002;
-    virtual_loss_multiplier: f64 = 1.7, 0.1, 3.0, 0.10, 0.002;
+    virtual_loss_multiplier: f64 = 2.5, 0.1, 3.0, 0.10, 0.002;
 }
