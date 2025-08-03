@@ -124,7 +124,7 @@ fn pick_action(searcher: &Searcher, ptr: NodePtr, node: &Node) -> usize {
             q = q2 as f32;
         }
 
-        let u = expl * child.policy() / (1.0 + f64::from(child.visits()) * 16.0 / (16.0 + threads)) as f32;
+        let u = expl * child.policy() / (1.0 + f64::from(child.visits()) * 8.0 / (8.0 + threads)) as f32;
 
         q + u
     })
